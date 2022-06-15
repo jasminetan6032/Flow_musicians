@@ -129,3 +129,14 @@ cfg.parameter = 'stat';
 cfg.zlim   = [-4 4];
 cfg.layout = 'biosemi64.lay';
 ft_clusterplot(cfg, FlowVSNonFlow);
+
+%extract significant electrodes
+pos_elecs = logical(FlowVSNonFlow.posclusterslabelmat);
+NF_alpha = mean(gavgNF.powspctrm(:,pos_elecs,4),2);%or perhaps sum?
+F_alpha = mean(gavgFlow.powspctrm(:,pos_elecs,4),2);
+
+pos_elecs = logical(FlowVSNonFlow.posclusterslabelmat);
+NF_beta = mean(gavgNF.powspctrm(:,pos_elecs,5),2);%or perhaps sum?
+F_beta = mean(gavgFlow.powspctrm(:,pos_elecs,5),2);
+
+clusterstats = cat(2,F_alpha,NF_alpha,F_beta,NF_beta);
